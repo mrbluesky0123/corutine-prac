@@ -1,6 +1,7 @@
 package book.ch5
 
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.yield
 
 /**
  * 일시중단 가능한 시퀀스: Suspendable sequence
@@ -47,27 +48,27 @@ import kotlinx.coroutines.runBlocking
 ////    }
 //}
 
-fun main(args: Array<String>) {
-    val iterator: Iterator<String> = iterator {
-        println("yielding 1")
-        yield("First")
-        println("yielding 2")
-        yield("Second")
-    }
-
-    if(iterator.hasNext()) {
-        println("iterator has next")
-        iterator.next()
-    }
-
-//    iterator.forEachRemaining {
-//        println(it)   // hasNext()를 내부적으로 호출
+//fun main(args: Array<String>) {
+//    val iterator: Iterator<String> = iterator {
+//        println("yielding 1")
+//        yield("First")
+//        println("yielding 2")
+//        yield("Second")
 //    }
-
-//    iterator.forEach {
-//        println(it)
+//
+//    if(iterator.hasNext()) {
+//        println("iterator has next")
+//        iterator.next()
 //    }
-}
+//
+////    iterator.forEachRemaining {
+////        println(it)   // hasNext()를 내부적으로 호출
+////    }
+//
+////    iterator.forEach {
+////        println(it)
+////    }
+//}
 
 
 /**
@@ -97,4 +98,81 @@ fun main(args: Array<String>) {
 ////    iterator.forEach {
 ////        println(it)
 ////    }
+//}
+
+
+/**
+ * 시퀀스
+ *   - 인덱스로 값을 가져올 수 있다.
+ *   - stateless하며 상호작용한 후 자동으로 재설정된다.
+ *   - 한 번의 호출로 값 그룹을 가져올 수 있다.
+ */
+//fun main(args: Array<String>): Unit = runBlocking {
+//    val seq = sequence<Int>{
+//        yield(1)
+//        yield(1)
+//        yield(2)
+//        yield(3)
+//        yield(5)
+//        yield(8)
+//        yield(13)
+//        yield(21)
+//    }
+//
+//    seq.forEach {
+//        print("$it ")
+//    }
+//    // 한 번 읽어도 또 읽을 수 있네? cf) iterator는 stream으로 한 번 읽으면 또 못읽음
+//    seq.forEachIndexed {index, value ->
+//        println("element at $index is $value")
+//    }
+//
+//    println(seq.elementAt(4))
+//    println(seq.elementAtOrElse(20) { it * 2 })
+//    println(seq.elementAtOrNull(20))
+//
+//    val firstFive = seq.take(5)
+//    println(firstFive.joinToString(limit = 3))
+//
+//}
+
+/**
+ * 시퀀스를 이용한 피보나치 수열 작성
+ */
+//fun main(args: Array<String>): Unit = runBlocking {
+//    val fibonacci = sequence {
+//        yield(1L)
+//        var current = 1L
+//        var next = 1L
+//        while(true) {
+//            yield(next)
+//            val tmpNext = current + next
+//            current = next
+//            next = tmpNext
+//        }
+//    }
+//    val indexed = fibonacci.take(50).withIndex()
+//    for((index, value) in indexed) {
+//        println("$index : $value")
+//    }
+//}
+
+/**
+ * 이터레이터로 피보나치
+ */
+//fun main(args: Array<String>): Unit = runBlocking {
+//    val fibonacci = iterator {
+//        yield(1L)
+//        var current = 1L
+//        var next = 1L
+//        while(true) {
+//            yield(next)
+//            val tmpNext = current + next
+//            current = next
+//            next = tmpNext
+//        }
+//    }
+//    for(i in 0..91) {
+//        println("$i is ${fibonacci.next()}")
+//    }
 //}
