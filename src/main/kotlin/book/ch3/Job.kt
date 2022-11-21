@@ -83,17 +83,17 @@ import kotlinx.coroutines.*
 //    println(cancellation.message)
 //}
 
-fun main(args: Array<String>) = runBlocking {
-    GlobalScope.launch {
-        throw Exception("######!!!")
-    }.invokeOnCompletion {
-        cause ->
-        cause?.let {
-            println("Job cancelled due to ${it.message}")
-        }
-    }
-    delay(2000)
-}
+//fun main(args: Array<String>) = runBlocking {
+//    GlobalScope.launch {
+//        throw Exception("######!!!")
+//    }.invokeOnCompletion {
+//        cause ->
+//        cause?.let {
+//            println("Job cancelled due to ${it.message}")
+//        }
+//    }
+//    delay(2000)
+//}
 
 /*
  * 완료됨: 실행이 중지된 잡은 정상적으로 종료됐거나, 취소됐거나, 예외 종료 했거나 여부에 관계없이 완료로 봄
